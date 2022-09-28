@@ -81,6 +81,7 @@ cat inventory.html
 if [[ ! -f /etc/cron.d/automation ]]; 
 then
 	echo "0 0 * * * root /root/Automation_Project/automation.sh" >> /etc/cron.d/automation
+	echo "Cronjob is created sucessfully"
 else	
 	echo "cronjob is already running" 
 fi
