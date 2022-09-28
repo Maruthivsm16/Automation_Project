@@ -55,3 +55,32 @@ then
 	aws s3 cp /tmp/${name}-httpd-logs-${timestamp}.tar s3://${s3_bucket}/${name}-httpd-logs-${timestamp}.tar
 
 fi
+
+# Check if inventory is exists or not,if not then create a inventory.html 	
+
+if [[ ! -f /var/www/html/inventory.html ]]; 
+then
+	echo -e 'Log Type\t-\tTime Created\t-\tType\t-\tSize' > /var/www/html/inventory.html
+fi
+
+# Send Logs into the file
+
+if [[ -f /var/www/html/inventory.html ]]; 
+then
+	size=$(du -h /tmp/${name}-httpd-logs-${timestamp}.tar | awk '{print $1}')
+	echo -e "httpd-logs\t-\t${timestamp}\t-\ttar\t-\t${size}" >> /var/www/html/inventory.html
+fi
+
+#veriyfying logs files
+
+cd /var/www/html/
+cat inventory.html
+
+# Creating a cron job that runs service every 1 day interval
+
+if [[ ! -f /etc/cron.d/automation ]]; 
+then
+	echo "0 0 * * * root /root/Automation_Project/automation.sh" >> /etc/cron.d/automation
+else	
+	echo "cronjob is already running" 
+fi
