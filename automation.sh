@@ -1,7 +1,7 @@
 #!/bin/bash
 
 name="vadapalli"
-s3_bucket="upgrad-vadapallisaimaruthi"
+s3_bucket="vadapallisaimaruthi"
 
 #update the ubuntu 
 
